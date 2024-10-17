@@ -51,8 +51,8 @@ const NewHeader = () => {
     ];
 
     return (
-        <div className=" customSm:bg-gradient-to-r from-[#FFFFFF] to-[#999999BA] bg-white sticky top-0 left-0   ">
-            <nav className="flex items-center justify-between py-[27px] customSm:py-2 px-[20px] sm:px-[60px] relative transition-all ease-in-out delay-[5000ms]   ">
+        <div className=" customSm:bg-gradient-to-r from-[#FFFFFF] to-[#999999BA] bg-white sticky top-0 left-0 z-[9990]">
+            <nav className="flex items-center justify-between py-[27px] customSm:py-2 px-[20px] sm:px-[60px] relative transition-all ease-in-out delay-[5000ms]">
                 <Image src={logo} height={54} width={206} alt="logo" className="select-none" />
                 <ul className=" items-center gap-[30px] hidden lg:flex">
                     {navLinks.map((link) => (

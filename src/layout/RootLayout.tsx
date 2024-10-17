@@ -1,21 +1,20 @@
-import { ReactNode } from "react"
-import NewHeader from "../components/NewHeader"
-import NewFooter from "../components/NewFooter"
+import { ReactNode } from "react";
+import NewHeader from "../components/NewHeader";
+import NewFooter from "../components/NewFooter";
+import { poppins } from "../../styles/theme";
 
 type LayoutProps = {
-  children: ReactNode
-}
+    children: ReactNode;
+};
 
-const RootLayout = ({children}:LayoutProps) => {
-  return (
-    <div className=" ">
-      <NewHeader/>
-      <div className="bg-[#F9F9F9]">
-      {children}
-      </  div>
-      <NewFooter/>
-    </div>
-  )
-}
+const RootLayout = ({ children }: LayoutProps) => {
+    return (
+        <div className=" ">
+            <NewHeader />
+            <div className={`${poppins.className} bg-[#f9f9f9]`}>{children}</div>
+            <NewFooter />
+        </div>
+    );
+};
 
-export default RootLayout
+export default RootLayout;

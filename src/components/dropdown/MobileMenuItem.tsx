@@ -57,7 +57,7 @@ const MobileMenuItem = ({ handleShowMenu }: MobileMenuItemProps) => {
         },
         {
             menuTitle: "Contact Us",
-            menuLink: "/",
+            menuLink: "/new-contact-us",
         },
         {
             menuTitle: "Fun & Games",
