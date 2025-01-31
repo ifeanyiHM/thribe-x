@@ -5,10 +5,8 @@ import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {
-    ChakraProvider,
-    // Box
-} from "@chakra-ui/react";
+
+import { ChakraProvider } from "@chakra-ui/react";
 import PlausibleProvider from "next-plausible";
 import { AnimatePresence } from "framer-motion";
 

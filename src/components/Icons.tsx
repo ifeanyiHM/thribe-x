@@ -102,3 +102,7 @@ export function AngleDownUp({ isClicked }: AngleDownUpProp) {
         </svg>
     );
 }
+
+export function Spinner() {
+    return <div className="spinner"></div>;
+}

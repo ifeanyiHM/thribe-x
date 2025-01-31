@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { ExitIcon } from "./assets/Icons";
+import { ExitIcon } from "../components/Icons";
 import Image from "next/image";
 
 interface WelcomeMessageProps {
@@ -11,20 +11,16 @@ function WelcomeMessage({ welcomeMessage, setWelcomeMessage }: WelcomeMessagePro
     const modalRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        function handleClickOutside(event: MouseEvent) {
             if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 setWelcomeMessage(false);
             }
-        };
-
-        welcomeMessage
-            ? document.addEventListener("mousedown", handleClickOutside)
-            : document.removeEventListener("mousedown", handleClickOutside);
-
+        }
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [welcomeMessage, setWelcomeMessage]);
+    }, [setWelcomeMessage]);
 
     return (
         <div

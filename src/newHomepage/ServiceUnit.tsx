@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Button from "../components/button/Button";
-import { ArrowRightIcon } from "./assets/Icons";
+import { ArrowRightIcon } from "../components/Icons";
 import { ServiceUnitSwiper } from "./Swiperjs";
 
 function ServiceUnit() {

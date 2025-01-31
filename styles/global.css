@@ -10,6 +10,10 @@
     @apply w-full font-[500];
 }
 
+.button-class {
+    @apply py-[0.563rem] lg:py-[1.031rem] rounded-[10px] text-[0.75rem] text-center lg:text-[1.125rem] text-[#ffffff] bg-[linear-gradient(93.15deg,_#CF60F2_-0.19%,_#78388C_99.46%)] hover:bg-[linear-gradient(93.15deg,_#E48FFB_-0.19%,_#8F5AA6_99.46%)] transition-all duration-300 cursor-pointer;
+}
+
 .error-class {
     @apply text-[0.75rem] customXs:text-[0.65rem] lg:text-[0.9rem] text-[#cc3030];
 }

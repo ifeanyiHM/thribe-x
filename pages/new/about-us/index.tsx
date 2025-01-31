@@ -2,7 +2,7 @@ import Image from "next/image";
 import RootLayout from "../../../src/layout/RootLayout";
 import { autour } from "../../../styles/theme";
 import Button from "../../../src/components/button/Button";
-import { ArrowRightIcon } from "../../../src/newHomepage/assets/Icons";
+import { ArrowRightIcon } from "../../../src/components/Icons";
 
 const NewAboutUsPage = () => {
     return (
@@ -131,7 +131,6 @@ const NewAboutUsPage = () => {
                     <div className="flex flex-col px-[1.375rem] py-[1.5rem] md:p-[1.7rem] xl:p-[2.25rem] lg:w-1/2 rounded-[20px] border bg-[#F1F1EE] shadow-[0px_2.46px_6.15px_0px_#00000040]">
                         <div>
                             <Image
-                                className=""
                                 src="/service2.png"
                                 alt="thribex service"
                                 layout="responsive"

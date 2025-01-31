@@ -153,7 +153,7 @@ const NewContactUsPage = () => {
                             loading="lazy"
                             title="The covenant place iganmu lagos"
                         ></iframe>
-                    </div>{" "}
+                    </div>
                 </div>
             </div>
         </RootLayout>

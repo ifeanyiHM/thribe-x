@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AngleDownUp } from "../newHomepage/assets/Icons";
+import { AngleDownUp } from "./Icons";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 interface CountryProps {
@@ -54,14 +54,11 @@ function CountryCodeList({ CCInputWidth, onSetCountryCode }: CountryListProps) {
                 setIsClicked(false);
             }
         }
-        isClicked
-            ? document.addEventListener("mousedown", handleClickOutside)
-            : document.removeEventListener("mousedown", handleClickOutside);
-
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [isClicked]);
+    }, []);
 
     const isSelectedCountry = countries.find((country) => country.name.common === selectedCountry);
 
@@ -89,11 +86,8 @@ function CountryCodeList({ CCInputWidth, onSetCountryCode }: CountryListProps) {
         >
             <button
                 type="button"
-                onClick={() => setIsClicked(!isClicked)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        setIsClicked(!isClicked);
-                    }
+                onClick={() => {
+                    setIsClicked((prev) => !prev);
                 }}
                 className="flex items-center h-full my-auto cursor-pointer"
             >
@@ -118,56 +112,73 @@ function CountryCodeList({ CCInputWidth, onSetCountryCode }: CountryListProps) {
                         {" "}
                         <input
                             ref={inputRef}
-                            className=" h-[1.5rem] w-full shadow-[2px_2px_5px_0px_rgba(0,0,0,0.25)] focus:outline-none text-[0.55rem] xl:text-[0.75rem] mt-2 pl-1"
+                            // autoFocus
+                            className="h-[1.5rem] w-full shadow-[2px_2px_5px_0px_rgba(0,0,0,0.25)] focus:outline-none text-[0.55rem] xl:text-[0.75rem] mt-2 pl-1"
                             type="text"
                             placeholder="search by countries"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                         />
                     </div>
-
-                    <ul className="mt-[2.3rem] z-10 max-h-[13.3rem] xl:max-h-[15rem] text-[0.75rem] lg:text-[0.8rem] overflow-y-scroll no-scrollbar">
-                        {searchedCountries.length === 0 ? (
-                            <li className="p-2 text-center">No countries found</li>
-                        ) : (
-                            searchedCountries.map((country) => (
-                                <li key={country.cca2}>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setSelectedCountry(country.name.common);
-                                            setIsClicked(false);
-                                            onSetCountryCode(
-                                                `${country.idd?.root}${country.idd?.suffixes?.[0]}`
-                                            );
-                                            setQuery("");
-                                        }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter" || e.key === " ") {
-                                                setSelectedCountry(country.name.common);
-                                                setIsClicked(false);
-                                                setQuery("");
-                                            }
-                                        }}
-                                        className="flex w-full items-center py-2 px-3 hover:bg-gray-100 cursor-pointer"
-                                    >
-                                        <Image
-                                            src={country.flags.png}
-                                            alt={`${country.name.common} flag`}
-                                            width={20}
-                                            height={20}
-                                        />
-                                        <span className="ml-2 text-start">
-                                            {country.name.common}
-                                        </span>
-                                    </button>
-                                </li>
-                            ))
-                        )}
-                    </ul>
+                    <SearchedCountries
+                        searchedCountries={searchedCountries}
+                        setSelectedCountry={setSelectedCountry}
+                        setIsClicked={setIsClicked}
+                        onSetCountryCode={onSetCountryCode}
+                        setQuery={setQuery}
+                    />
                 </div>
             )}
         </div>
+    );
+}
+
+interface SearchedCountriesProps {
+    searchedCountries: CountryProps[];
+    setSelectedCountry: Dispatch<SetStateAction<string>>;
+    setIsClicked: Dispatch<SetStateAction<boolean>>;
+    onSetCountryCode: Dispatch<SetStateAction<string>>;
+    setQuery: Dispatch<SetStateAction<string>>;
+}
+
+function SearchedCountries({
+    searchedCountries,
+    setSelectedCountry,
+    setIsClicked,
+    onSetCountryCode,
+    setQuery,
+}: SearchedCountriesProps) {
+    return (
+        <ul className="mt-[2.3rem] z-10 max-h-[13.3rem] xl:max-h-[15rem] text-[0.75rem] lg:text-[0.8rem] overflow-y-scroll no-scrollbar">
+            {searchedCountries.length === 0 ? (
+                <li className="p-2 text-center">No countries found</li>
+            ) : (
+                searchedCountries.map((country) => (
+                    <li key={country.cca2}>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setSelectedCountry(country.name.common);
+                                setIsClicked(false);
+                                onSetCountryCode(
+                                    `${country.idd?.root}${country.idd?.suffixes?.[0]}`
+                                );
+                                setQuery("");
+                            }}
+                            className="flex w-full items-center py-2 px-3 hover:bg-gray-100 cursor-pointer"
+                        >
+                            <Image
+                                src={country.flags.png}
+                                alt={`${country.name.common} flag`}
+                                width={20}
+                                height={20}
+                            />
+                            <span className="ml-2 text-start">{country.name.common}</span>
+                        </button>
+                    </li>
+                ))
+            )}
+        </ul>
     );
 }
 

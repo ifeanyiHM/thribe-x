@@ -5,6 +5,49 @@ import { useEffect, useRef } from "react";
 type MobileMenuItemProps = {
     handleShowMenu: () => void;
 };
+
+const menuItems = [
+    {
+        menuTitle: "Home",
+        menuLink: "/new",
+    },
+    {
+        menuTitle: " Service Units",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "About Us",
+        menuLink: "/new/about-us",
+    },
+    {
+        menuTitle: "Gallery",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "Small Groups",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "Trending",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "Store",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "FAQ",
+        menuLink: "/",
+    },
+    {
+        menuTitle: "Contact Us",
+        menuLink: "/new-contact-us",
+    },
+    {
+        menuTitle: "Fun & Games",
+        menuLink: "/",
+    },
+];
 const MobileMenuItem = ({ handleShowMenu }: MobileMenuItemProps) => {
     const pathname = usePathname();
     const mobileRef = useRef<HTMLDivElement>(null);
@@ -22,48 +65,6 @@ const MobileMenuItem = ({ handleShowMenu }: MobileMenuItemProps) => {
         };
     }, [mobileRef, handleShowMenu]);
 
-    const menuItems = [
-        {
-            menuTitle: "Home",
-            menuLink: "/new",
-        },
-        {
-            menuTitle: " Service Units",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "About Us",
-            menuLink: "/new/about-us",
-        },
-        {
-            menuTitle: "Gallery",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "Small Groups",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "Trending",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "Store",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "FAQ",
-            menuLink: "/",
-        },
-        {
-            menuTitle: "Contact Us",
-            menuLink: "/new-contact-us",
-        },
-        {
-            menuTitle: "Fun & Games",
-            menuLink: "/",
-        },
-    ];
     return (
         <div
             ref={mobileRef}

@@ -44,7 +44,6 @@ const DesktopMenuItem = ({ handleShowMenu }: DesktopMenuItemProps) => {
             className="absolute right-0 top-full transition-all ease-in-out delay-[2000ms] customLg:hidden  "
             tabIndex={0}
             onKeyDown={(e) => {
-                console.log(e.key);
                 if (e.key === "Escape" || e.key === " ") {
                     handleShowMenu();
                 }

@@ -1,9 +1,8 @@
 import React, { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import { ArrowSendIcon } from "./assets/Icons";
+import { ArrowSendIcon, Spinner } from "../components/Icons";
 import Button from "../components/button/Button";
 import Toast from "../components/Toast";
 import CountryCodeList from "../components/CountryCode";
-import Spinner from "../components/Spinner";
 
 interface ContactFormProps {
     children: ReactNode;
@@ -35,7 +34,7 @@ function ContactForm({
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [errors, setErrors] = useState<ValidationProps>({});
+    const [errorMessages, setErrorMessages] = useState<ValidationProps>({});
     const [countryCode, setCountryCode] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string>("");
@@ -50,15 +49,14 @@ function ContactForm({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        setErrors({});
+        setErrorMessages({});
         setIsSubmitting(true);
 
         let validationErrors: ValidationProps = {};
 
         if (!phoneNumber) {
-            validationErrors.phoneNumber = "Your phone number is requried.";
-        }
-        if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
+            validationErrors.phoneNumber = "Your phone number is required.";
+        } else if (!validatePhoneNumber(phoneNumber)) {
             validationErrors.phoneNumber = "Enter a valid phone number.";
         }
         if (email && !validateEmail(email)) {
@@ -69,7 +67,7 @@ function ContactForm({
         }
 
         if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
+            setErrorMessages(validationErrors);
             setIsSubmitting(false);
             return;
         }
@@ -132,10 +130,20 @@ function ContactForm({
                                     type="text"
                                     placeholder="8145663725"
                                     value={phoneNumber}
-                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setPhoneNumber(value);
+
+                                        if ((value && validatePhoneNumber(value)) || !phoneNumber) {
+                                            setErrorMessages((prev) => ({
+                                                ...prev,
+                                                phoneNumber: "",
+                                            }));
+                                        }
+                                    }}
                                 />
-                                {errors.phoneNumber && (
-                                    <p className="error-class">{errors.phoneNumber}</p>
+                                {errorMessages.phoneNumber && (
+                                    <p className="error-class">{errorMessages.phoneNumber}</p>
                                 )}
                             </div>
                         </div>
@@ -154,7 +162,9 @@ function ContactForm({
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        {errors.email && <p className="error-class">{errors.email}</p>}
+                        {errorMessages.email && (
+                            <p className="error-class">{errorMessages.email}</p>
+                        )}
                     </div>
                 </div>
                 <div>
@@ -167,14 +177,25 @@ function ContactForm({
                             className="w-full bg-[#f5f5f5] border border-[#0000001A] focus:outline-[#686565e5] rounded-[8px] text-[0.75rem] lg:text-[1rem] h-[4.875rem] md:h-[5.5rem] lg:h-[7.25rem] pl-[1rem] pt-[0.75rem]"
                             placeholder="Write your message"
                             value={message}
-                            onChange={(e) => setMessage(e.target.value)}
+                            onChange={(e) => {
+                                setMessage(e.target.value);
+                                if (errorMessages.message) {
+                                    setErrorMessages((prev) => ({
+                                        ...prev,
+                                        message: "",
+                                    }));
+                                }
+                            }}
                         ></textarea>
                     </div>{" "}
-                    {errors.message && <p className="error-class">{errors.message}</p>}
+                    {errorMessages.message && (
+                        <p className="error-class">{errorMessages.message}</p>
+                    )}
                 </div>
                 <Button
                     label={isSubmitting ? "Submitting" : "Send"}
                     className="w-full flex items-center gap-[1rem] justify-center mt-[0.5rem] lg:mt-[0.75rem]"
+                    disabled={isSubmitting}
                 >
                     {isSubmitting ? <Spinner /> : <ArrowSendIcon />}
                 </Button>
